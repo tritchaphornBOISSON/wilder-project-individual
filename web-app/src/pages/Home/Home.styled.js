@@ -12,3 +12,10 @@ export const CardRow = styled.section`
   gap: 20px;
   justify-content: center;
 `;
+
+
+
+
+
+
+

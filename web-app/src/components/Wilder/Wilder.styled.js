@@ -9,6 +9,8 @@ export const Card = styled.article`
   border: 1px solid #c9c9c9;
   border-radius: 7px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+  background-color:${({ isTrainer }) => (isTrainer ? "#CCC" : "FFF")} ;
+  
 `;
 
 export const CardImage = styled.img`

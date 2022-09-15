@@ -9,9 +9,9 @@ import {
     CardTitle,
 } from "./Wilder.styled";
 
-const Wilder = ({ firstName, lastName, skills }) => {
+const Wilder = ({ firstName, lastName, skills, isTrainer }) => {
     return (
-        <Card>
+        <Card isTrainer={isTrainer}>
             <CardImage src={blankProfilePicture} alt="Jane Doe Profile" />
             <CardTitle>
                 {firstName} {lastName}
@@ -26,7 +26,7 @@ const Wilder = ({ firstName, lastName, skills }) => {
             <CardSkillList>
                 {skills.map((skill) => (
                     <li key={skill.id}>
-                        <Skill skillName={skill.skillName} numberOfVotes={1} />
+                        <Skill skillName={skill.skillName} numberOfVotes={1} isTrainer={isTrainer} />
                     </li>
                 ))}
             </CardSkillList>

@@ -1,5 +1,7 @@
 import { SectionTitle, CardRow } from "./Home.styled";
 import Wilder from "../../components/Wilder/Wilder";
+import { useEffect, useState } from "react";
+import Loader from "../../components/Loader/Loader";
 
 const WILDERS = [
     {
@@ -54,19 +56,36 @@ const WILDERS = [
 ];
 
 const Home = () => {
+    const [wilders, setWilders] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchWilders = async () => {
+            const response = await fetch("/wilders");
+            const fetchedWilders = await response.json();
+            setWilders(fetchedWilders);
+            setIsLoading(false);
+        }
+        fetchWilders();
+    }, []);
     return (
         <>
             <SectionTitle>Wilders</SectionTitle>
-            <CardRow>
-                {WILDERS.map((wilder) => (
-                    <Wilder
-                        key={wilder.id}
-                        firstName={wilder.firstName}
-                        lastName={wilder.lastName}
-                        skills={wilder.skills}
-                    />
-                ))}
-            </CardRow>
+            {isLoading
+                ?
+                <Loader />
+                :
+                (<CardRow>
+                    {wilders?.map((wilder) => (
+                        <Wilder
+                            key={wilder.id}
+                            firstName={wilder.firstName}
+                            lastName={wilder.lastName}
+                            skills={wilder.skills}
+                            isTrainer={wilder.isTrainer}
+                        />
+                    ))}
+                </CardRow>)}
         </>
     );
 };
