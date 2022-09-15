@@ -1,0 +1,7 @@
+PUT http://localhost:4000/wilders/efa45791-b870-4218-a42c-8ab89602ea74
+Content-Type: application/json
+
+{
+    "firstName": "Lady",
+    "lastName": "Gaga"
+}
