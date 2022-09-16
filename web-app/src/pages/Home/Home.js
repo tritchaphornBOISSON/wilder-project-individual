@@ -1,91 +1,61 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { SectionTitle, CardRow } from "./Home.styled";
 import Wilder from "../../components/Wilder/Wilder";
-import { useEffect, useState } from "react";
 import Loader from "../../components/Loader/Loader";
+import { CREATE_WILDER_PATH } from "../paths";
+import { fetchWildersRest } from "./rest";
 
-const WILDERS = [
-    {
-        id: "aaaa",
-        firstName: "Laurent",
-        lastName: "Wilder",
-        skills: [
-            {
-                id: "skill-1",
-                skillName: "PHP",
-            },
-        ],
-    },
-    {
-        id: "bbbb",
-        firstName: "Jeanne",
-        lastName: "Wild",
-        skills: [
-            {
-                id: "skill-2",
-                skillName: "JavaScript",
-            },
-        ],
-    },
-    {
-        id: "cccc",
-        firstName: "Nicolas",
-        lastName: "W.",
-        skills: [
-            {
-                id: "skill-1",
-                skillName: "PHP",
-            },
-            {
-                id: "skill-2",
-                skillName: "JavaScript",
-            },
-        ],
-    },
-    {
-        id: "dddd",
-        firstName: "Arnaud",
-        lastName: "Renaud",
-        isTrainer: true,
-        skills: [
-            {
-                id: "skill-2",
-                skillName: "JavaScript",
-            },
-        ],
-    },
-];
+
 
 const Home = () => {
     const [wilders, setWilders] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState('')
 
     useEffect(() => {
         const fetchWilders = async () => {
-            const response = await fetch("/wilders");
-            const fetchedWilders = await response.json();
-            setWilders(fetchedWilders);
-            setIsLoading(false);
+            try {
+                const fetchedWilders = await fetchWildersRest();
+                setWilders(fetchedWilders);
+            } catch (error) {
+                setErrorMessage(error.message);
+            } finally {
+                setIsLoading(false);
+            }
         }
         fetchWilders();
     }, []);
+
+    const renderMainContent = () => {
+        if (isLoading) {
+            return <Loader />;
+        }
+        if (errorMessage) {
+            return errorMessage;
+        }
+        if (!wilders.length) {
+            return 'Aucun wilder à afficher';
+        }
+        return (
+            <CardRow>
+                {wilders?.map((wilder) => (
+                    <Wilder
+                        key={wilder.id}
+                        firstName={wilder.firstName}
+                        lastName={wilder.lastName}
+                        skills={wilder.skills}
+                        isTrainer={wilder.isTrainer}
+                    />
+                ))}
+            </CardRow>
+        );
+    }
     return (
         <>
             <SectionTitle>Wilders</SectionTitle>
-            {isLoading
-                ?
-                <Loader />
-                :
-                (<CardRow>
-                    {wilders?.map((wilder) => (
-                        <Wilder
-                            key={wilder.id}
-                            firstName={wilder.firstName}
-                            lastName={wilder.lastName}
-                            skills={wilder.skills}
-                            isTrainer={wilder.isTrainer}
-                        />
-                    ))}
-                </CardRow>)}
+            <Link to={CREATE_WILDER_PATH}>Ajouter un nouveau Wilder</Link>
+            {renderMainContent()}
         </>
     );
 };
