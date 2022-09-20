@@ -1,5 +1,4 @@
 import blankProfilePicture from "../../media/blank-profile-picture.png";
-import DeleteWilder from "../../pages/DeleteWilder/DeleteWilder";
 import Skill from "../Skill/Skill";
 import {
     Card,
@@ -31,7 +30,6 @@ const Wilder = ({ id, firstName, lastName, skills, isTrainer }) => {
                     </li>
                 ))}
             </CardSkillList>
-            <DeleteWilder id={id} />
         </Card>
     );
 };
