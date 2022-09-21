@@ -12,9 +12,9 @@ import {
 
 type PropType = Omit<WilderType, "id" | "school">;
 
-const Wilder = ({ firstName, lastName, skills }: PropType) => {
+const Wilder = ({ firstName, lastName, isTrainer, skills }: PropType) => {
   return (
-    <Card>
+    <Card isTrainer={isTrainer}>
       <CardImage src={blankProfilePicture} alt="Jane Doe Profile" />
       <CardTitle>
         {firstName} {lastName}
@@ -29,7 +29,11 @@ const Wilder = ({ firstName, lastName, skills }: PropType) => {
       <CardSkillList>
         {skills.map((skill) => (
           <li key={skill.id}>
-            <Skill skillName={skill.skillName} numberOfVotes={1} />
+            <Skill
+              skillName={skill.skillName}
+              numberOfVotes={1}
+              isTrainer={isTrainer}
+            />
           </li>
         ))}
       </CardSkillList>

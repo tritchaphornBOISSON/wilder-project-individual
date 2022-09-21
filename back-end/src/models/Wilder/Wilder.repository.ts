@@ -33,11 +33,11 @@ export default class WilderRepository extends Wilder {
       "TypeScript"
     )) as Skill;
 
-    const tritcha = new Wilder("Tritcha", "Boisson", lyonSchool, [
+    const tritcha = new Wilder("Tritcha", "Boisson", false, lyonSchool, [
       phpSkill,
       javaScriptSkill,
     ]);
-    const tata = new Wilder("Tata", "Young", parisSchool, [
+    const tata = new Wilder("Tata", "Young", true, parisSchool, [
       typeScriptSkill,
       javaSkill,
     ]);
