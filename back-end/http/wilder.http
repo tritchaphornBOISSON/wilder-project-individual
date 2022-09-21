@@ -1,0 +1,32 @@
+GET http://localhost:4000/wilders
+
+###
+POST http://localhost:4000/wilders
+Content-Type: application/json
+
+{
+    "firstName": "Lady",
+    "lastName": "Gaga"
+}
+
+###
+PUT http://localhost:4000/wilders/4a1d5e4b-b890-48d6-8610-c42438aec81f
+Content-Type: application/json
+
+{
+    "firstName": "John",
+    "lastName": "Snow"
+}
+
+###
+DELETE  http://localhost:4000/wilders/7118dac3-b300-4b4b-bbb4-29de868df9a7
+Content-Type: application/json
+
+###
+//Add skill to wilder
+POST http://localhost:4000/wilders/4a1d5e4b-b890-48d6-8610-c42438aec81f/skills
+Content-Type: application/json
+
+{
+  "skillId": "359eec90-9b1f-4d89-a721-1f4729ccdac9"
+}

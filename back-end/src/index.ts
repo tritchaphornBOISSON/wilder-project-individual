@@ -2,6 +2,7 @@ import express from "express";
 import { getDatabase } from "./database/utils";
 import { initializeWilders } from "./models/Wilder/wilderManager";
 import * as wildersController from "./controllers/wilderController";
+import * as skillsController from "./controllers/skillController";
 import { initializeSchool } from "./models/School/schoolManager";
 import { initializeSkills } from "./models/Skill/skillManager";
 
@@ -18,6 +19,12 @@ app.post(WILDERS_PATH, wildersController.post);
 app.put(`${WILDERS_PATH}/:id`, wildersController.put);
 app.delete(`${WILDERS_PATH}/:id`, wildersController.del);
 app.post(`${WILDERS_PATH}/:id/skills`, wildersController.addSkill);
+
+const SKILLS_PATH = "/skills";
+app.get(SKILLS_PATH, skillsController.get);
+app.post(SKILLS_PATH, skillsController.post);
+app.put(`${SKILLS_PATH}/:id`, skillsController.put);
+app.delete(`${SKILLS_PATH}/:id`, skillsController.del);
 
 const PORT = 4000;
 
