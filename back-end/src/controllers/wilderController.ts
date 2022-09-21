@@ -1,16 +1,9 @@
-import {
-  getWilders,
-  createWilder,
-  updateWilder,
-  deleteWilder,
-  addSkillToWilder,
-} from "../models/Wilder/wilderManager";
-
 import { Request, Response } from "express";
 import { getErrorMessage } from "../utils";
+import WilderRepository from "../models/Wilder/Wilder.repository";
 
 const get = async (req: Request, res: Response): Promise<void> => {
-  const wilders = await getWilders();
+  const wilders = await WilderRepository.getWilders();
   res.json(wilders);
 };
 
@@ -19,7 +12,7 @@ const post = async (req: Request, res: Response): Promise<void> => {
   if (!firstName || !lastName) {
     res.status(400).json({ error: "Firstname and lastname are mandatory" });
   } else {
-    const newWilder = await createWilder(firstName, lastName);
+    const newWilder = await WilderRepository.createWilder(firstName, lastName);
     res.status(201).json(newWilder);
   }
 };
@@ -31,7 +24,11 @@ const put = async (req: Request, res: Response): Promise<void> => {
     res.status(400).json({ error: "Firstname and lastname are mandatory" });
   } else {
     try {
-      const updatedWilder = await updateWilder(id, firstName, lastName);
+      const updatedWilder = await WilderRepository.updateWilder(
+        id,
+        firstName,
+        lastName
+      );
       res.json(updatedWilder);
     } catch (error) {
       res.status(400).json({ error: getErrorMessage(error) });
@@ -42,7 +39,7 @@ const put = async (req: Request, res: Response): Promise<void> => {
 const del = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    await deleteWilder(id);
+    await WilderRepository.deleteWilder(id);
     res.json({ message: `Wilder ${id} has been successfully removed.` });
   } catch (error) {
     res.status(400).json({ error: getErrorMessage(error) });
@@ -56,8 +53,11 @@ const addSkill = async (req: Request, res: Response): Promise<void> => {
     res.status(400).json({ error: "Skill ID is mandatory" });
   } else {
     try {
-      const updateWilder = await addSkillToWilder(wilderId, skillId);
-      res.json(updateWilder);
+      const updatedWilder = await WilderRepository.addSkillToWilder(
+        wilderId,
+        skillId
+      );
+      res.json(updatedWilder);
     } catch (error) {
       res.status(400).json({ error: getErrorMessage(error) });
     }

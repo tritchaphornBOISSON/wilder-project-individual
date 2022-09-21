@@ -1,13 +1,10 @@
-import { DataSource } from "typeorm";
-import School from "../models/School/schoolEntity";
-import Skill from "../models/Skill/skillEntity";
-import Wilder from "../models/Wilder/wilderEntity";
+import { DataSource, EntityTarget } from "typeorm";
 
 const dataSource = new DataSource({
   type: "sqlite",
   database: "wildersdb.sqlite",
   synchronize: true,
-  entities: [Wilder, School, Skill],
+  entities: [__dirname + "/../models/**/*.entity.js"],
   logging: ["query", "error"],
 });
 
@@ -21,21 +18,8 @@ const getDatabase = async () => {
   return dataSource;
 };
 
-const getWilderRepository = async () => {
-  return (await getDatabase()).getRepository(Wilder);
+const getRepository = async (entity: EntityTarget<any>) => {
+  return (await getDatabase()).getRepository(entity);
 };
 
-const getSchoolRepository = async () => {
-  return (await getDatabase()).getRepository(School);
-};
-
-const getSkillRepository = async () => {
-  return (await getDatabase()).getRepository(Skill);
-};
-
-export {
-  getDatabase,
-  getWilderRepository,
-  getSchoolRepository,
-  getSkillRepository,
-};
+export { getDatabase, getRepository };

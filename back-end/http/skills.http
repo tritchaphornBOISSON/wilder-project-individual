@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:4000/skills/671e9c2f-db55-490f-a066-8b9be084cd08
+PUT http://localhost:4000/skills/a5c9bab1-bc62-4d2a-ac54-8397e2b534bc
 Content-Type: application/json
 
 {
@@ -18,5 +18,5 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:4000/skills/e7588abb-7913-4ea2-82fc-ea791461d3a7
+DELETE http://localhost:4000/skills/a5c9bab1-bc62-4d2a-ac54-8397e2b534bc
 Content-Type: application/json

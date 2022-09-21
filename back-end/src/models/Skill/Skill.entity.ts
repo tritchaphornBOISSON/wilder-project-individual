@@ -2,20 +2,20 @@ import {
   Column,
   Entity,
   Index,
-  OneToMany,
+  ManyToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import Wilder from "../Wilder/wilderEntity";
+import Wilder from "../Wilder/Wilder.entity";
 
 @Entity()
-export default class School {
+export default class Skill {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
   @Index({ unique: true })
-  schoolName: string;
+  skillName: string;
 
-  @OneToMany(() => Wilder, (wilder) => wilder.school)
+  @ManyToMany(() => Wilder, (wilder) => wilder.skills)
   wilders: Wilder[];
 }

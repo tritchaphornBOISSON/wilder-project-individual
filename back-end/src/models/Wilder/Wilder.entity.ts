@@ -6,8 +6,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import School from "../School/schoolEntity";
-import Skill from "../Skill/skillEntity";
+import School from "../School/School.entity";
+import Skill from "../Skill/Skill.entity";
 
 @Entity()
 export default class Wilder {
@@ -41,4 +41,8 @@ export default class Wilder {
   @ManyToMany(() => Skill, { eager: true })
   @JoinTable()
   skills: Skill[];
+
+  getFullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
 }
