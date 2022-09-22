@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { SectionTitle, CardRow } from "./Home.styled";
 import Wilder from "../../components/Wilder/Wilder";
 import Loader from "../../components/Loader";
@@ -58,6 +59,7 @@ const Home = () => {
       <SectionTitle>Wilders</SectionTitle>
       <Link to={CREATE_WILDER_PATH}>Ajouter un nouveau Wilder</Link>
       {renderMainContent()}
+      <ToastContainer />
     </>
   );
 };

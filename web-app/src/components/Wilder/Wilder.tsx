@@ -14,8 +14,6 @@ import {
   CardTitle,
 } from "./Wilder.styled";
 
-//type PropType = Omit<WilderType>;
-
 const Wilder = ({
   id,
   firstName,
