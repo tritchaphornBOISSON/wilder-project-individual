@@ -25,7 +25,7 @@ const Home = () => {
       }
     };
     fetchWilders();
-  }, []);
+  }, [wilders]);
 
   const renderMainContent = () => {
     if (isLoading) {
@@ -42,10 +42,12 @@ const Home = () => {
         {wilders?.map((wilder) => (
           <Wilder
             key={wilder.id}
+            id={wilder.id}
             firstName={wilder.firstName}
             lastName={wilder.lastName}
             skills={wilder.skills}
             isTrainer={wilder.isTrainer}
+            school={wilder.school}
           />
         ))}
       </CardRow>

@@ -13,6 +13,6 @@ export type WilderType = {
   firstName: string;
   lastName: string;
   isTrainer: boolean;
-  school: SchoolType[];
+  school: SchoolType;
   skills: SkillType[];
 };
