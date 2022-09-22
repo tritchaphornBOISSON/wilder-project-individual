@@ -24,4 +24,38 @@ export default class SchoolRepository extends School {
   static async getSchoolByName(name: string): Promise<School | null> {
     return this.repository.findOneBy({ schoolName: name });
   }
+
+  static async getSchools(): Promise<School[]> {
+    return this.repository.find();
+  }
+
+  static async createSchool(schoolName: string): Promise<School> {
+    const newSchool = this.repository.create({ schoolName });
+    await this.repository.save(newSchool);
+    return newSchool;
+  }
+
+  static async updateSchool(
+    id: string,
+    schoolName: string
+  ): Promise<
+    {
+      id: string;
+      schoolName: string;
+    } & School
+  > {
+    const existingSchool = this.repository.findOneBy({ id });
+    if (!existingSchool) {
+      throw Error("No school with matching ID found");
+    }
+    return this.repository.save({ id, schoolName });
+  }
+
+  static async deleteSchool(id: string): Promise<School> {
+    const existingSchool = await this.repository.findOneBy({ id });
+    if (!existingSchool) {
+      throw Error("No school with matching ID found");
+    }
+    return this.repository.remove(existingSchool);
+  }
 }

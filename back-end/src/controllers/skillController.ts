@@ -36,7 +36,7 @@ const del = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
     await SkillRepository.deleteSkill(id);
-    res.json({ message: `Skill ${id} has been successfully removed` });
+    res.json({ message: `Skill ID: ${id} has been successfully removed` });
   } catch (error) {
     res.status(400).json({ error: getErrorMessage(error) });
   }
