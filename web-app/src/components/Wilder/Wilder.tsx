@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import blankProfilePicture from "../../media/blank-profile-picture.png";
 import { WilderType } from "../../types";
 import { getErrorMessage } from "../../utils";
@@ -23,14 +24,12 @@ const Wilder = ({
   school,
   skills,
 }: WilderType) => {
-  const [errorMessage, setErrorMessage] = useState("");
-
   const deleteWilder = async (id: string) => {
     try {
-      const deletedWilder = await deleteWilderRest(id);
-      console.log(deletedWilder);
+      await deleteWilderRest(id);
+      toast.success(`Wilder ID: ${id} has been successfully removed`);
     } catch (error) {
-      setErrorMessage(getErrorMessage(error));
+      toast.error(getErrorMessage(error));
     }
   };
   return (

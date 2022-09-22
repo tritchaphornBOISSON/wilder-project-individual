@@ -12,7 +12,9 @@ const CreateWilder = () => {
   const submit = async () => {
     try {
       await createWilder(firstName, lastName);
-      toast.success(`Wilder ${firstName} ${lastName} créé avec succès`);
+      toast.success(
+        `Wilder ${firstName} ${lastName} has been successfully created`
+      );
       setFirstName("");
       setLastName("");
     } catch (error) {
