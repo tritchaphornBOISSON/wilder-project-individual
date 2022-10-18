@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { MAIN_THEME_COLOR } from "../../styles/style-constants";
+import { MAIN_THEME_COLOR, BORDER_COLOR } from "../../styles/style-constants";
 import { baseTitleStyles, Paragraph } from "../../styles/base-styles";
 
 type PropType = {
@@ -8,13 +8,14 @@ type PropType = {
 };
 
 export const Card = styled.article`
+  position: relative;
   width: 200px;
   padding: 20px;
-  border: 1px solid #c9c9c9;
+  border: 1px solid ${BORDER_COLOR};
   border-radius: 7px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
-  background-color: ${({ isTrainer }: PropType) =>
-    isTrainer ? "#CCC" : "FFF"};
+  border: ${({ isTrainer }: PropType) =>
+    isTrainer ? "3px solid #F76C6C" : ""};
 `;
 
 export const CardImage = styled.img`

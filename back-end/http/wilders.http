@@ -6,7 +6,9 @@ Content-Type: application/json
 
 {
     "firstName": "Lady",
-    "lastName": "Gaga"
+    "lastName": "Gaga",
+    "skills" : ["Java"]
+  
 }
 
 ###

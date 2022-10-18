@@ -1,17 +1,57 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { createWilder } from "./rest";
+import Select from "react-select";
+import { createWilderRest, fetchSkillsRest } from "./rest";
 import { SectionTitle } from "../../styles/base-styles";
 import { getErrorMessage } from "../../utils";
+import { SkillType, WilderType } from "../../types";
 
 const CreateWilder = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  //const [skills, setSkills] = useState<null | string[]>(null);
+  //const [errorMessage, setErrorMessage] = useState("");
+  // const [skillsSelected, setSkillsSelected] = useState<
+  //   OptionType[] | string[]
+  // >();
+
+  // useEffect(() => {
+  //   const fetchSkills = async () => {
+  //     try {
+  //       const fetchedSkills = await fetchSkillsRest();
+  //       //setSkills(fetchedSkills);
+  //       console.log(fetchedSkills);
+  //     } catch (error) {
+  //       setErrorMessage(getErrorMessage(error));
+  //     }
+  //   };
+  //   fetchSkills();
+  // }, []);
+
+  // type OptionType = {
+  //   value: string;
+  //   label: string;
+  // };
+  // const options = skills?.map((skill) => {
+  //   return { value: skill.skillName, label: skill.skillName };
+  // });
+
+  // const handleSelectSkills = (selectedOption: OptionType[]) => {
+  //   let skills = selectedOption.map((skill) => skill.value);
+  //   setSkillsSelected(selectedOption);
+  //   setSkills(skills);
+  //   console.log("skills", skills, "skillSelected", skillsSelected);
+  // };
 
   const submit = async () => {
     try {
-      await createWilder(firstName, lastName);
+      const result = await createWilderRest(
+        firstName,
+        lastName
+        // skillsSelected
+      );
+      console.log(result);
       toast.success(
         `Wilder ${firstName} ${lastName} has been successfully created`
       );
@@ -21,9 +61,10 @@ const CreateWilder = () => {
       toast.error(getErrorMessage(error));
     }
   };
+
   return (
     <>
-      <SectionTitle>Ajouter un nouveau Wilder</SectionTitle>
+      <SectionTitle>Create new Wilder</SectionTitle>
       <form
         onSubmit={async (event) => {
           event.preventDefault();
@@ -31,7 +72,7 @@ const CreateWilder = () => {
         }}
       >
         <label>
-          Prénom <br />
+          Firstname <br />
           <input
             required
             type="text"
@@ -45,7 +86,7 @@ const CreateWilder = () => {
         </label>
         <br />
         <label>
-          Nom <br />
+          Lastname <br />
           <input
             required
             type="text"
@@ -58,7 +99,12 @@ const CreateWilder = () => {
           />
         </label>
         <br />
-        <button>Valider</button>
+        {/* <Select
+          options={options}
+          isMulti={true}
+          onChange={(option) => handleSelectSkills(option as OptionType[])}
+        /> */}
+        <button>Go!</button>
       </form>
       <ToastContainer />
     </>

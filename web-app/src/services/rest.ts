@@ -1,6 +1,8 @@
 import { getErrorMessage } from "../utils";
 
 export const WILDERS_PATH = "/wilders";
+export const SKILLS_PATH = "/skills";
+export const SCHOOL_PATH = "/schools";
 
 export enum HTTPVerb {
   GET = "GET",

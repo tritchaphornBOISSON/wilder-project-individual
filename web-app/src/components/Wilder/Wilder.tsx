@@ -1,10 +1,14 @@
-import { toast } from "react-toastify";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import blankProfilePicture from "../../media/blank-profile-picture.png";
 import { WilderType } from "../../types";
 import { getErrorMessage } from "../../utils";
+import CloseButton from "../CloseButton/CloseButton";
+import Dialog from "../Dialog/Dialog";
 import Skill from "../Skill/Skill";
-import { deleteWilderRest } from "./rest";
+import { deleteWilder } from "./rest";
+
 import {
   Card,
   CardImage,
@@ -13,7 +17,7 @@ import {
   CardSkillList,
   CardTitle,
 } from "./Wilder.styled";
-
+type PropType = WilderType & { onDelete: () => void };
 const Wilder = ({
   id,
   firstName,
@@ -21,11 +25,20 @@ const Wilder = ({
   isTrainer,
   school,
   skills,
-}: WilderType) => {
-  const deleteWilder = async (id: string) => {
+  onDelete,
+}: PropType) => {
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
+  const onCloseButtonClick = () => {
+    setShowDeleteConfirmation(true);
+  };
+  const onDeleteConfirmation = async () => {
     try {
-      await deleteWilderRest(id);
-      toast.success(`Wilder ID: ${id} has been successfully removed`);
+      await deleteWilder(id);
+      toast.success(
+        `Wilder ${firstName} ${lastName} has been successfully deleted`
+      );
+      onDelete();
     } catch (error) {
       toast.error(getErrorMessage(error));
     }
@@ -52,7 +65,17 @@ const Wilder = ({
           </li>
         ))}
       </CardSkillList>
-      <button onClick={() => deleteWilder(id)}>Delete</button>
+      <CloseButton onClick={onCloseButtonClick} />
+      {showDeleteConfirmation && (
+        <Dialog
+          onCancel={() => setShowDeleteConfirmation(false)}
+          onConfirm={() => {
+            setShowDeleteConfirmation(false);
+            onDeleteConfirmation();
+          }}
+        />
+      )}
+      <ToastContainer />
     </Card>
   );
 };

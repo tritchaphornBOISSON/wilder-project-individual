@@ -51,8 +51,22 @@ export default class WilderRepository extends Wilder {
   static async createWilder(
     firstName: string,
     lastName: string
+    // skillsNames: string[] //["PHP", "JavaScript"]
   ): Promise<Wilder> {
-    const newWilder = this.repository.create({ firstName, lastName });
+    // const getSkills = async () => {
+    //   let result: (Skill | null)[] = [];
+    //   for (const skillName of skillsNames) {
+    //     result.push(await SkillRepository.getSkillByName(skillName));
+    //   }
+    //   console.log(result);
+    //   return result;
+    // };
+    // const skills = (await getSkills()) as Skill[];
+    const newWilder = this.repository.create({
+      firstName,
+      lastName,
+      // skills,
+    });
     await this.repository.save(newWilder);
     return newWilder;
   }

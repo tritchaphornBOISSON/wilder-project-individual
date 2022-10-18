@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { getErrorMessage } from "../utils";
 import WilderRepository from "../models/Wilder/Wilder.repository";
+import SkillRepository from "../models/Skill/Skill.repository";
 
 const get = async (req: Request, res: Response): Promise<void> => {
   const wilders = await WilderRepository.getWilders();
@@ -9,10 +10,17 @@ const get = async (req: Request, res: Response): Promise<void> => {
 
 const post = async (req: Request, res: Response): Promise<void> => {
   const { firstName, lastName } = req.body;
+  console.log(req.body);
+
   if (!firstName || !lastName) {
     res.status(400).json({ error: "Firstname and lastname are mandatory" });
   } else {
-    const newWilder = await WilderRepository.createWilder(firstName, lastName);
+    console.log("enter the code");
+    const newWilder = await WilderRepository.createWilder(
+      firstName,
+      lastName
+      //skills
+    );
     res.status(201).json(newWilder);
   }
 };
