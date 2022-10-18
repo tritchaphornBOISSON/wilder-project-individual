@@ -1,3 +1,4 @@
+import { ObjectType, Field, ID } from "type-graphql";
 import {
   Column,
   Entity,
@@ -10,6 +11,7 @@ import School from "../School/School.entity";
 import Skill from "../Skill/Skill.entity";
 
 @Entity()
+@ObjectType()
 export default class Wilder {
   constructor(
     firstName: string,
@@ -33,21 +35,27 @@ export default class Wilder {
     }
   }
   @PrimaryGeneratedColumn("uuid")
+  @Field(() => ID)
   id: string;
 
   @Column()
+  @Field()
   firstName: string;
 
   @Column()
+  @Field()
   lastName: string;
 
   @Column({ nullable: true })
+  @Field({ nullable: true })
   isTrainer: boolean;
 
   @ManyToOne(() => School, (school) => school.wilders, { eager: true })
+  @Field(() => School, { nullable: true })
   school: School;
 
   @ManyToMany(() => Skill, { eager: true })
+  @Field(() => [Skill])
   @JoinTable()
   skills: Skill[];
 
