@@ -1,57 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { gql, useMutation } from "@apollo/client";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Select from "react-select";
-import { createWilderRest, fetchSkillsRest } from "./rest";
 import { SectionTitle } from "../../styles/base-styles";
 import { getErrorMessage } from "../../utils";
-import { SkillType, WilderType } from "../../types";
+import {
+  CreateWilderMutation,
+  CreateWilderMutationVariables,
+} from "../../gql/graphql";
+import Loader from "../../components/Loader";
+
+const CREATE_WILDER = gql`
+  mutation CreateWilder($firstName: String!, $lastName: String!) {
+    createWilder(firstName: $firstName, lastName: $lastName) {
+      id
+      firstName
+      lastName
+    }
+  }
+`;
 
 const CreateWilder = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  //const [skills, setSkills] = useState<null | string[]>(null);
-  //const [errorMessage, setErrorMessage] = useState("");
-  // const [skillsSelected, setSkillsSelected] = useState<
-  //   OptionType[] | string[]
-  // >();
 
-  // useEffect(() => {
-  //   const fetchSkills = async () => {
-  //     try {
-  //       const fetchedSkills = await fetchSkillsRest();
-  //       //setSkills(fetchedSkills);
-  //       console.log(fetchedSkills);
-  //     } catch (error) {
-  //       setErrorMessage(getErrorMessage(error));
-  //     }
-  //   };
-  //   fetchSkills();
-  // }, []);
-
-  // type OptionType = {
-  //   value: string;
-  //   label: string;
-  // };
-  // const options = skills?.map((skill) => {
-  //   return { value: skill.skillName, label: skill.skillName };
-  // });
-
-  // const handleSelectSkills = (selectedOption: OptionType[]) => {
-  //   let skills = selectedOption.map((skill) => skill.value);
-  //   setSkillsSelected(selectedOption);
-  //   setSkills(skills);
-  //   console.log("skills", skills, "skillSelected", skillsSelected);
-  // };
+  const [createWilder, { loading }] = useMutation<
+    CreateWilderMutation,
+    CreateWilderMutationVariables
+  >(CREATE_WILDER);
 
   const submit = async () => {
     try {
-      const result = await createWilderRest(
-        firstName,
-        lastName
-        // skillsSelected
-      );
-      console.log(result);
+      await createWilder({ variables: { firstName, lastName } });
       toast.success(
         `Wilder ${firstName} ${lastName} has been successfully created`
       );
@@ -99,12 +79,7 @@ const CreateWilder = () => {
           />
         </label>
         <br />
-        {/* <Select
-          options={options}
-          isMulti={true}
-          onChange={(option) => handleSelectSkills(option as OptionType[])}
-        /> */}
-        <button>Go!</button>
+        <button disabled={loading}>{loading ? <Loader /> : "Go!"}</button>
       </form>
       <ToastContainer />
     </>

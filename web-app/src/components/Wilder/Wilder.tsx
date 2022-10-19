@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { gql, useMutation } from "@apollo/client";
 import blankProfilePicture from "../../media/blank-profile-picture.png";
-import { WilderType } from "../../types";
 import { getErrorMessage } from "../../utils";
 import CloseButton from "../CloseButton/CloseButton";
 import Dialog from "../Dialog/Dialog";
 import Skill from "../Skill/Skill";
-import { deleteWilder } from "./rest";
 
 import {
   Card,
@@ -17,7 +16,21 @@ import {
   CardSkillList,
   CardTitle,
 } from "./Wilder.styled";
-type PropType = WilderType & { onDelete: () => void };
+import {
+  DeleteWilderMutation,
+  DeleteWilderMutationVariables,
+  GetWildersQuery,
+} from "../../gql/graphql";
+type PropType = GetWildersQuery["wilders"][number] & { onDelete: () => void };
+const DELETE_WILDER = gql`
+  mutation DeleteWilder($id: String!) {
+    deleteWilder(id: $id) {
+      id
+      firstName
+      lastName
+    }
+  }
+`;
 const Wilder = ({
   id,
   firstName,
@@ -28,13 +41,17 @@ const Wilder = ({
   onDelete,
 }: PropType) => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [deleteWilder] = useMutation<
+    DeleteWilderMutation,
+    DeleteWilderMutationVariables
+  >(DELETE_WILDER);
 
   const onCloseButtonClick = () => {
     setShowDeleteConfirmation(true);
   };
   const onDeleteConfirmation = async () => {
     try {
-      await deleteWilder(id);
+      await deleteWilder({ variables: { id } });
       toast.success(
         `Wilder ${firstName} ${lastName} has been successfully deleted`
       );
@@ -44,7 +61,7 @@ const Wilder = ({
     }
   };
   return (
-    <Card isTrainer={isTrainer}>
+    <Card isTrainer={isTrainer!}>
       <CardImage src={blankProfilePicture} alt="Jane Doe Profile" />
       <CardTitle>
         {firstName} {lastName}
