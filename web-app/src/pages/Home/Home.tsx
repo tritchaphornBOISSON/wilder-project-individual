@@ -59,7 +59,7 @@ const Home = () => {
   };
   return (
     <>
-      <SectionTitle>Wilders</SectionTitle>
+      <SectionTitle>Wilders :)</SectionTitle>
       <Link to={CREATE_WILDER_PATH}>Ajouter un nouveau Wilder</Link>
       {renderMainContent()}
     </>

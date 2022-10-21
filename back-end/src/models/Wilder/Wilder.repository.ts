@@ -13,7 +13,7 @@ export default class WilderRepository extends Wilder {
   }
 
   static async clearRepository(): Promise<void> {
-    this.repository.clear();
+    this.repository.delete({});
   }
 
   static async initializeWilders(): Promise<void> {
@@ -37,7 +37,7 @@ export default class WilderRepository extends Wilder {
       phpSkill,
       javaScriptSkill,
     ]);
-    const tata = new Wilder("Tata", "Young", true, parisSchool, [
+    const tata = new Wilder("Maya", "Miller", true, parisSchool, [
       typeScriptSkill,
       javaSkill,
     ]);
