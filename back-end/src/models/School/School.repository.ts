@@ -56,6 +56,8 @@ export default class SchoolRepository extends School {
     if (!existingSchool) {
       throw Error("No school with matching ID found");
     }
-    return this.repository.remove(existingSchool);
+    await this.repository.remove(existingSchool);
+    existingSchool.id = id;
+    return existingSchool;
   }
 }

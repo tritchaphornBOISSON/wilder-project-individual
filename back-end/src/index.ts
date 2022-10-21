@@ -6,6 +6,7 @@ import SkillRepository from "./models/Skill/Skill.repository";
 import WilderRepository from "./models/Wilder/Wilder.repository";
 import WilderResolver from "./resolvers/Wilder/Wilder.resolver";
 import { buildSchema } from "type-graphql";
+import SchoolReslover from "./resolvers/School/School.resolver";
 
 // const WILDERS_PATH = "/wilders";
 // app.get(WILDERS_PATH, wildersController.get);
@@ -29,7 +30,7 @@ import { buildSchema } from "type-graphql";
 const startServer = async () => {
   const server = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [WilderResolver],
+      resolvers: [WilderResolver, SchoolReslover],
     }),
     csrfPrevention: true,
     cache: "bounded",
